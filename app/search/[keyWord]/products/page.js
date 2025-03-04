@@ -2,14 +2,25 @@
 
 import CardComponents from "@/app/_component/card";
 import { Products } from "@/app/api/data";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useParams, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
-export default function ProductsPage() {
+export default function ProductSearchPage() {
   const data = Products;
+  const keyWord = useParams();
   const [products, setProducts] = useState(data);
-
   const router = useRouter()
+
+  useEffect(() => {
+    if (keyWord?.keyWord) {
+      const filteredProducts = data.filter((product) =>
+        product.name.toLowerCase().includes(keyWord.keyWord.toLowerCase())
+      );
+      setProducts(filteredProducts.length > 0 ? filteredProducts : []);
+    } else {
+      setProducts(data);
+    }
+  }, [keyWord]);
 
   return (
     <div className="flex flex-col items-center py-10">
@@ -30,7 +41,7 @@ export default function ProductsPage() {
                         {product.price.toLocaleString()}đ
                       </p>
                       <p className="pt-2 line-clamp-1">
-                        {product.name} ({product.weight})
+                        {product.description} ({product.weight})
                       </p>
                     </div>
                   </div>
@@ -39,7 +50,7 @@ export default function ProductsPage() {
           </div>
         </CardComponents>
       ) : (
-        <p>Không tìm thấy sản phẩm nào"</p>
+        <p>Không tìm thấy sản phẩm nào với từ khoá "{keyWord?.productId}"</p>
       )}
     </div>
   );

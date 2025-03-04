@@ -1,0 +1,108 @@
+export const Pharmacys = [
+    {
+        id: "p1",
+        name: 'Nhà Thuốc FPT Long Châu',
+        img: "",
+        local: "113 Hoàng Văn Thái, Hoà Khánh Nam, Liên Chiểu, Đà Nẵng, Việt Nam",
+    },
+    {
+        id: "p2",
+        name: 'Nhà Thuốc Thu Nguyệt',
+        img: "",
+        local: "75 Mẹ Suốt, Hoà Khánh Nam, Liên Chiểu, Đà Nẵng, Việt Nam",
+    },
+    {
+        id: "p3",
+        name: 'Nhà thuốc Circa Minh Huy',
+        img: "",
+        local: "120 Mẹ Suốt, Hoà Khánh Nam, Liên Chiểu, Đà Nẵng, Việt Nam",
+    },
+    {
+        id: "p4",
+        name: 'Nhà Thuốc Sa An',
+        img: "",
+        local: "236 Hoàng Văn Thái, Hoà Khánh Nam, Liên Chiểu, Đà Nẵng, Việt Nam",
+    },
+    {
+        id: "p5",
+        name: 'Nhà Thuốc Chấn Hưng Thịnh',
+        img: "",
+        local: "264 Hoàng Văn Thái, Hoà Khánh Nam, Liên Chiểu, Đà Nẵng, Việt Nam",
+    },
+]
+
+export const Doctors = [
+    {
+        id: "d1",
+        name: 'Lê Văn Tấn',
+        img: "",
+        price: "239.800 đ",
+        rate: 90,
+    },
+    {
+        id: "d2",
+        name: 'Nguyễn Văn Bình',
+        img: "",
+        price: "218.000 đ",
+        rate: 90,
+    },
+    {
+        id: "d3",
+        name: 'Nguyễn Tiến Đạt',
+        img: "",
+        price: "302.000 đ",
+        rate: 90,
+    },
+    {
+        id: "d4",
+        name: 'Lê Văn Hưng',
+        img: "",
+        price: "400.000 đ",
+        rate: 90,
+    },
+]
+
+export const Products = [
+    {
+        id: "s1",
+        name: "Sữa bột Nutren Junior 800g",
+        price: 600000,
+        unit: "Hộp",
+        quantity: 1,
+        image: "https://cms-prod.s3-sgn09.fptcloud.com/DSC_00955_239c805d09.jpg",
+        description: "Bột hòa tan Soki-Tium giúp tăng cường tinh thần và sức khỏe cho người bệnh. Dùng với các chế độ điều trị bệnh thông thường.",
+        weight: "300g",
+        status: "Sản phẩm vẫn còn trong hiệu thuốc",
+        pharmacy: "Nhà Thuốc FPT Long Châu",
+        cart: true,
+        favorite: true,
+    },
+    {
+        id: "s2",
+        name: "Viên uống Dr. Caci Ocavill giúp xương và răng chắc khỏe",
+        price: 345000,
+        unit: "Hộp",
+        quantity: 1,
+        image: "https://cms-prod.s3-sgn09.fptcloud.com/00500119_vien_uong_ho_tro_giam_nguy_co_loang_xuong_drcaci_ocavill_60v_9841_628b_large_f16d550237.jpg",
+        description: "Bột hòa tan Soki-Tium giúp tăng cường tinh thần và sức khỏe cho người bệnh. Dùng với các chế độ điều trị bệnh thông thường.",
+        weight: "300g",
+        status: "Sản phẩm vẫn còn trong hiệu thuốc",
+        pharmacy: "Nhà Thuốc FPT Long Châu",
+        cart: true,
+        favorite: true,
+    },
+    {
+        id: "s3",
+        name: "Viên uống B Complex Vitamin Royal Care hỗ trợ giảm mệt mỏi, căng thẳng",
+        price: 167000,
+        unit: "Hộp",
+        quantity: 1,
+        image: "https://cms-prod.s3-sgn09.fptcloud.com/00032942_b_complex_vitamin_royal_care_60v_5253_61c0_large_17e5e39343.jpg",
+        description: "Bột hòa tan Soki-Tium giúp tăng cường tinh thần và sức khỏe cho người bệnh. Dùng với các chế độ điều trị bệnh thông thường.",
+        weight: "300g",
+        status: "Sản phẩm vẫn còn trong hiệu thuốc",
+        pharmacy: "Nhà Thuốc FPT Long Châu",
+        cart: true,
+        favorite: false,
+    },
+]

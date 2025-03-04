@@ -1,7 +1,7 @@
 "use client"
 import { useRouter } from "next/navigation";
 import Dashboard from "./dashboard";
-import { Heart, Home, LayoutGrid, MessageCircle } from "lucide-react";
+import { Heart, Home, LayoutGrid, MessageCircle, PackageSearch } from "lucide-react";
 
 const listItem = [
     {
@@ -23,13 +23,18 @@ const listItem = [
         id: "4",
         href: "/chat",
         icon: MessageCircle,
+    },
+    {
+        id: "5",
+        href: "/trachProducts",
+        icon: PackageSearch,
     }
 ]
 
 const ItemDasboard = () => {
     const router = useRouter()
     return (
-        <div className="fixed flex justify-between bottom-0 w-full p-6">
+        <div className="fixed flex justify-between bottom-0 w-full p-6 bg-white">
             {listItem.map(item => (
                 <div key={item.id}>
                     <Dashboard href = {item.href} Icon = {item?.icon} onClick={() => router.push(`${item.href}`)}/>
