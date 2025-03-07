@@ -34,7 +34,7 @@ const listItem = [
 const ItemDasboard = () => {
     const router = useRouter()
     return (
-        <div className="fixed flex justify-between bottom-0 w-full p-6 bg-white">
+        <div className="fixed flex justify-between bottom-0 shadow-md shadow-black w-full p-6 bg-white">
             {listItem.map(item => (
                 <div key={item.id}>
                     <Dashboard href = {item.href} Icon = {item?.icon} onClick={() => router.push(`${item.href}`)}/>
