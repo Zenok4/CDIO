@@ -72,7 +72,7 @@ export const Products = [
   {
     id: "s1",
     name: "Thuốc Exopadin 60mg Trường Thọ điều trị viêm mũi dị ứng, mày đay (3 vỉ x 10 viên)",
-    price: "60.000",
+    price: 60000,
     unit: "Hộp",
     quantity: 1,
     image:
@@ -88,7 +88,7 @@ export const Products = [
   {
     id: "s2",
     name: "Thuốc Cetirizin 10mg Trường Thọ trị ngứa ngoài da do dị ứng (10 vỉ x 10 viên)",
-    price: "40.000",
+    price: 40000,
     unit: "Hộp",
     quantity: 1,
     image:
@@ -104,7 +104,7 @@ export const Products = [
   {
     id: "s3",
     name: "Thuốc Npluvico Nature điều trị suy tuần hoàn não (6 vỉ x 10 viên)",
-    price: "168.000",
+    price: 168000,
     unit: "Hộp",
     quantity: 1,
     image:
@@ -120,7 +120,7 @@ export const Products = [
   {
     id: "s4",
     name: "Thuốc Interginko 120mg Arlico điều trị rối loạn tuần hoàn ngoại biên (10 vỉ x 10 viên)",
-    price: "760.000",
+    price: 760000,
     unit: "Hộp",
     quantity: 1,
     image:
@@ -136,7 +136,7 @@ export const Products = [
   {
     id: "s5",
     name: "Sữa rửa mặt On: The Body Rice Therapy Heartleaf Acne Cleanser làm sạch sâu không gây khô da (150ml)",
-    price: "165.000",
+    price: 165000,
     unit: "Tuýp",
     quantity: 1,
     image:
@@ -152,7 +152,7 @@ export const Products = [
   {
     id: "s6",
     name: "Sữa rửa mặt Reihaku Hatomugi Acne Care and Facial Washing ngừa mụn, dưỡng ẩm và làm sáng da (130g)",
-    price: "82.000",
+    price: 82000,
     unit: "Tuýp",
     quantity: 1,
     image:
@@ -168,7 +168,7 @@ export const Products = [
   {
     id: "s7",
     name: "Sữa rửa mặt Transino Clear Wash EX loại bỏ bụi bẩn, dầu nhờn, bã thừa (100g)",
-    price: "425.000",
+    price: 425000,
     unit: "Tuýp",
     quantity: 1,
     image:
@@ -184,7 +184,7 @@ export const Products = [
   {
     id: "s8",
     name: "Viên uống Bifido Plus Jpanwell bổ sung các lợi khuẩn tăng cường sức khỏe đại tràng (30 viên)",
-    price: "990.000",
+    price: 990000,
     unit: "Hộp",
     quantity: 1,
     image:
@@ -200,7 +200,7 @@ export const Products = [
   {
     id: "s9",
     name: "Viên uống Đại Tràng Tâm Bình hỗ trợ giảm các triệu chứng của viêm đại tràng cấp và mãn tính (5 vỉ x 12 viên)",
-    price: "95.000",
+    price: 95000,
     unit: "Hộp",
     quantity: 1,
     image:
@@ -216,7 +216,7 @@ export const Products = [
   {
     id: "s10",
     name: "Viên uống Kaki Ekisu Tohchukasou Kenkan hỗ trợ tăng cường sinh lý nam giới (60 viên)",
-    price: "515.000",
+    price: 515000,
     unit: "Hộp",
     quantity: 1,
     image:
@@ -232,7 +232,7 @@ export const Products = [
   {
     id: "s11",
     name: "Thực phẩm bảo vệ sức khỏe KID GROW Kenko tăng cường sức đề kháng và chiều cao cho trẻ",
-    price: "480.000",
+    price: 480000,
     unit: "Hộp",
     quantity: 1,
     image:
@@ -248,7 +248,7 @@ export const Products = [
   {
     id: "s12",
     name: "Viên uống Omexxel Ginkgo 120 Premium Omexxel hỗ trợ tốt cho não và tim mạch (60 viên)",
-    price: "630.000",
+    price: 630000,
     unit: "Hộp",
     quantity: 1,
     image:
