@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import CardComponents from "./_component/card";
 import { Doctors, Pharmacys, Products } from "./api/data";
-import { ThumbsUp } from "lucide-react";
+import { ArrowRight, ThumbsUp } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 export default function Home() {
@@ -20,8 +20,9 @@ export default function Home() {
     <div className="flex flex-col items-center py-10 relative">
       {pharmacys?.length > 0 && (
         <CardComponents title="Hiệu Thuốc Gần Đây">
+          <ArrowRight className="absolute top-6 font-bold right-4 w-7 h-7" />
           <section className="w-full flex flex-col items-center pb-5">
-            <div className="flex overflow-x-auto w-full space-x-2">
+            <div className="flex overflow-x-scroll w-full space-x-2">
               {pharmacys.map((pharmacy, index) => (
                 <img
                   key={index}
@@ -39,6 +40,7 @@ export default function Home() {
       <div>
         {products?.length > 0 && (
           <CardComponents title="Sản Phẩm Mới">
+            <ArrowRight className="absolute top-6 font-bold right-4 w-7 h-7" />
             <section className="flex flex-col items-center py-10">
               <div className="flex w-full mt-4 space-x-2">
                 {products.slice(-5).map((product, index) => (
@@ -73,6 +75,7 @@ export default function Home() {
 
         {doctors?.length > 0 && (
           <CardComponents title="Bác sĩ tư vấn">
+            <ArrowRight className="absolute top-6 font-bold right-4 w-7 h-7" />
             <div className="container mx-auto px-32 rounded-md">
               <div className="grid grid-cols-4 gap-5 place-items-center py-4">
                 {doctors.slice(-4).map((doctor) => (
