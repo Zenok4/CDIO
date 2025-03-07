@@ -17,7 +17,7 @@ export default function LoginPage() {
             Đăng Nhập
           </p>
         </div>
-        <p className="cursor-pointer">Tạo tài khoản mới</p>
+        <p className="cursor-pointer hover:bg-slate-300 py-1 px-2 rounded-md" onClick={() => router.push("/login/register")}>Tạo tài khoản mới</p>
       </div>
     </div>
   );

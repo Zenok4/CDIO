@@ -24,11 +24,6 @@ const listItem = [
         href: "/chat",
         icon: MessageCircle,
     },
-    {
-        id: "5",
-        href: "/trachProducts",
-        icon: PackageSearch,
-    }
 ]
 
 const ItemDasboard = () => {

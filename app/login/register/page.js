@@ -87,7 +87,7 @@ export default function LoginPage() {
 
           <h6 className="text-gray-600 text-sm mt-2 flex gap-2">
             Đã có tài khoản?{" "}
-            <p className="text-blue-500 cursor-pointer">Đăng Nhập Ngay.</p>
+            <p className="text-blue-500 cursor-pointer" onClick={() => router.push("/login/login")}>Đăng Nhập Ngay.</p>
           </h6>
           <p className="text-gray-500 text-sm">Hoặc</p>
           <p className="text-gray-600 text-sm">Đăng ký qua</p>
