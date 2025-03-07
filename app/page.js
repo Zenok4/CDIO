@@ -20,14 +20,14 @@ export default function Home() {
     <div className="flex flex-col items-center py-10 relative">
       {pharmacys?.length > 0 && (
         <CardComponents title="Hiệu Thuốc Gần Đây">
-          <section className="py-10">
-            <div className="flex overflow-x-auto w-full mt-4 space-x-2 gap-2">
-              {products.map((src, index) => (
+          <section className="w-full flex flex-col items-center pb-5">
+            <div className="flex overflow-x-auto w-full space-x-2">
+              {pharmacys.map((pharmacy, index) => (
                 <img
                   key={index}
-                  src={src.image}
+                  src={pharmacy?.img}
                   alt={`Hiệu thuốc ${index + 1}`}
-                  className="w-[1500px] h-[500px] object-cover rounded-lg hover:opacity-80 transition"
+                  className="w-[1170px] h-[500px] rounded-lg hover:opacity-80 transition"
                   loading="lazy"
                 />
               ))}
@@ -37,12 +37,18 @@ export default function Home() {
       )}
 
       <div>
-        {pharmacys?.length > 0 && (
+        {products?.length > 0 && (
           <CardComponents title="Sản Phẩm Mới">
             <section className="flex flex-col items-center py-10">
               <div className="flex w-full mt-4 space-x-2">
                 {products.slice(-5).map((product, index) => (
-                  <div className="w-full" key={index}>
+                  <div
+                    className="w-full"
+                    key={index}
+                    onClick={() =>
+                      router.push(`/products/productDetail/${product?.id}`)
+                    }
+                  >
                     <img
                       src={product.image}
                       alt={`Hiệu thuốc ${index + 1}`}
@@ -69,13 +75,10 @@ export default function Home() {
           <CardComponents title="Bác sĩ tư vấn">
             <div className="container mx-auto px-32 rounded-md">
               <div className="grid grid-cols-4 gap-5 place-items-center py-4">
-                {doctors.slice(-5).map((doctor) => (
+                {doctors.slice(-4).map((doctor) => (
                   <div
                     key={doctor.id}
                     className="flex flex-col bg-white p-4 rounded-lg shadow-md w-[260px] hover:shadow-lg transition"
-                    onClick={() =>
-                      router.push(`/products/productDetail/${product.id}`)
-                    }
                   >
                     <img
                       className="w-full h-[250px] rounded-lg hover:opacity-80 transition"
