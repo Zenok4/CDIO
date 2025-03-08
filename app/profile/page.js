@@ -57,7 +57,7 @@ const ProfilePage = () => {
           <OptionItem
             icon="🔒"
             label="Admin Mode"
-            onClick={() => router.push("/admin/prodcuts")}
+            onClick={() => router.push("/admin/products")}
           />
           <OptionItem icon="🌍" label="Ngôn ngữ" value="Tiếng Việt" />
         </div>

@@ -7,7 +7,7 @@ import React, { useState } from "react";
 const Sidebar = () => {
   const router = useRouter();
   return (
-    <div className="w-1/6 bg-green-100 flex flex-col items-center p-5 min-h-screen">
+    <div className="w-1/6 bg-[#dcfce7] flex flex-col items-center p-5 min-h-screen bod">
       <div className="mb-5">
         <svg
           xmlns="http://www.w3.org/2000/svg"

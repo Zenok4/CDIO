@@ -300,7 +300,7 @@ const AdminPage = () => {
   };
 
   return (
-    <div className="flex h-screen bg-green-200">
+    <div className="flex h-screen bg-[#f0fdf4]">
       <Sidebar />
       <UserTable />
     </div>
