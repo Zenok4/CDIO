@@ -52,8 +52,8 @@ export default function ProductSearchPage() {
   }, [keyWord]);
 
   return (
-    <div className="flex flex-col items-center py-10 relative">
-      <div className="absolute flex justify-between gap-2 right-10 top-10">
+    <div className="flex flex-col items-center py-10 relative"  onClick={() => {console.log(hide); setHide(!hide)}}>
+      <div className="absolute flex justify-between gap-2 right-10 top-10 z-10">
           <div className={cn("bg-white border p-2 mt-1 transition-all transition-discrete duration-300 rounded-md", hide && "opacity-0")}>
             <p
               className="border-b hover:bg-slate-500 hover:text-white cursor-pointer px-1 transition-all duration-200"
@@ -70,7 +70,7 @@ export default function ProductSearchPage() {
               Bác Sĩ
             </p>
           </div>
-        <Menu className="w-10 h-10" onClick={() => setHide(!hide)} />
+        <Menu className="w-10 h-10" />
       </div>
       {products?.length > 0 || pharmacys?.length > 0 || doctors?.length > 0 ? (
         <div>
