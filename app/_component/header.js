@@ -1,10 +1,13 @@
 "use client";
+import { useSession } from "@supabase/auth-helpers-react";
 import { Search, ShoppingCart, UserCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 const Header = () => {
   const [search, setSearch] = useState("");
+
+  const session = useSession();
 
   const router = useRouter();
 
@@ -32,15 +35,24 @@ const Header = () => {
         />
       </div>
 
-      <div className="flex gap-4">
+      <div className="flex gap-4 items-center">
         <ShoppingCart
           className="w-5 h-5 text-black"
           onClick={() => router.push("/cart")}
         />
-        <UserCircle
-          className="w-5 h-5 text-black"
-          onClick={() => router.push("/profile")}
-        />
+        {session ? (
+          <UserCircle
+            className="w-5 h-5 text-black"
+            onClick={() => router.push("/profile")}
+          />
+        ) : (
+          <div
+            className="w-24 h-8 border border-black hover:bg-cyan-500 hover:text-white flex items-center justify-center text-sm font-semibold rounded-sm cursor-pointer"
+            onClick={() => router.push("/login/login")}
+          >
+            Đăng Nhập
+          </div>
+        )}
       </div>
     </div>
   );

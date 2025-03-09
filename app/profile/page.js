@@ -1,8 +1,14 @@
 "use client";
-import { MoveLeft } from "lucide-react";
+import { useSupabaseClient } from "@supabase/auth-helpers-react";
+import { Loader2, MoveLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 const ProfilePage = () => {
+  const [loading, setLoading] = useState(false);
+
+  const supabase = useSupabaseClient()
+
   const router = useRouter();
 
   const OptionItem = ({ icon, label, value, onClick }) => {
@@ -19,6 +25,17 @@ const ProfilePage = () => {
       </div>
     );
   };
+
+  const signOut = async () => {
+    setLoading(true);
+    const {data, error} = await supabase.auth.signOut();
+    if(error){
+      console.error("Lỗi đăng xuất:", error.message);
+      setLoading(false);
+      return null;
+    }
+    setLoading(false);
+  }
 
   return (
     <div className="flex flex-col items-center bg-gray-100 min-h-screen p-6">
@@ -66,10 +83,19 @@ const ProfilePage = () => {
       {/* Logout Button */}
       <button
         className="mt-6 w-full max-w-sm py-3 bg-gray-700 text-white text-lg font-semibold rounded-lg cursor-pointer"
-        onClick={() => router.push("/login")}
+        onClick={signOut}
       >
         ĐĂNG XUẤT
       </button>
+
+      {loading && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+          <div className="flex flex-col items-center p-6 bg-white rounded-lg shadow-lg">
+            <Loader2 className="w-10 h-10 animate-spin text-green-500" />
+            <p className="mt-2 text-gray-700">Đang đăng xuất...</p>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

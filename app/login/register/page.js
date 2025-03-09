@@ -1,19 +1,69 @@
 "use client";
 import CardComponents from "@/app/_component/card";
-import { Eye, EyeClosed } from "lucide-react";
+import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
+import { Eye, EyeClosed, Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [showRePassword, setShowRePassword] = useState(false);
   const [register, setRegister] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [passwordConfirmation, setPasswordConfirmation] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const handleShowPassword = () => setShowPassword(!showPassword);
   const handleShowRePassword = () => setShowRePassword(!showRePassword);
   const handleToggleRegister = () => setRegister(!register);
 
   const router = useRouter();
+  const session = useSession();
+
+  const supabase = useSupabaseClient();
+
+  const signUp = async (email, password, userName) => {
+    setLoading(true);
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password,
+    });
+
+    if (error) {
+      console.error("Lỗi đăng ký:", error.message);
+      return null;
+    }
+
+    // Nếu đăng ký thành công, lưu thông tin vào bảng profiles
+    const user = data.user;
+    if (user) {
+      const { error: profileError } = await supabase
+        .from("users")
+        .insert([{ id: user.id, email, user_name: userName }]);
+
+      if (profileError) {
+        console.error("Lỗi khi lưu profile:", profileError.message);
+      }
+    }
+    setError(profileError || "");
+    setLoading(false);
+  };
+
+  const handleRegisterSuccess = () => {
+    signUp(email, password, "User");
+    if (error === "") {
+      setEmail("");
+      setPassword("");
+      setPasswordConfirmation("");
+      handleToggleRegister();
+    }
+  };
+
+  useEffect(() => {
+    if (session) router.push("/");
+  }, []);
 
   return (
     <div className="flex flex-col justify-between items-center">
@@ -29,12 +79,14 @@ export default function LoginPage() {
           <input
             className="w-80 p-2 rounded-md border border-black"
             placeholder="Email hoặc số điện thoại"
+            onChange={(ev) => setEmail(ev.target.value)}
           />
           <div className="relative w-80">
             <input
               className="w-full p-2 rounded-md border border-black pr-10"
               placeholder="Mật khẩu"
               type={showPassword === true ? "text" : "password"}
+              onChange={(ev) => setPassword(ev.target.value)}
             />
             <span
               className="absolute right-3 top-2.5 cursor-pointer"
@@ -52,6 +104,7 @@ export default function LoginPage() {
               className="w-full p-2 rounded-md border border-black pr-10"
               placeholder="Nhập lại mật khẩu"
               type={showRePassword === true ? "text" : "password"}
+              onChange={(ev) => setPasswordConfirmation(ev.target.value)}
             />
             <span
               className="absolute right-3 top-2.5 cursor-pointer"
@@ -80,14 +133,19 @@ export default function LoginPage() {
           {/* Nút đăng ký */}
           <button
             className="w-80 bg-green-500 text-white p-2 rounded-md font-bold"
-            onClick={handleToggleRegister}
+            onClick={handleRegisterSuccess}
           >
             Đăng Ký
           </button>
 
           <h6 className="text-gray-600 text-sm mt-2 flex gap-2">
             Đã có tài khoản?{" "}
-            <p className="text-blue-500 cursor-pointer" onClick={() => router.push("/login/login")}>Đăng Nhập Ngay.</p>
+            <p
+              className="text-blue-500 cursor-pointer"
+              onClick={() => router.push("/login/login")}
+            >
+              Đăng Nhập Ngay.
+            </p>
           </h6>
           <p className="text-gray-500 text-sm">Hoặc</p>
           <p className="text-gray-600 text-sm">Đăng ký qua</p>
@@ -124,6 +182,14 @@ export default function LoginPage() {
           )}
         </div>
       </CardComponents>
+      {loading && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+          <div className="flex flex-col items-center p-6 bg-white rounded-lg shadow-lg">
+            <Loader2 className="w-10 h-10 animate-spin text-green-500" />
+            <p className="mt-2 text-gray-700">Đang tạo tài khoản...</p>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
