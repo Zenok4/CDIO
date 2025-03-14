@@ -145,7 +145,7 @@ const AdminPage = () => {
       setLoading(true);
       const { data, error } = await supabase
         .from("users")
-        .update({is_active: !currentStatus})
+        .update({ is_active: !currentStatus })
         .eq("id", id);
 
       if (error) {
@@ -163,11 +163,11 @@ const AdminPage = () => {
       setLoading(true);
       const { data, error } = await supabase
         .from("users")
-        .update({ user_name: editUser?.user_name, email: editUser?.email })
+        .update({ user_name: editUser?.user_name, role: editUser?.role })
         .eq("id", editUser?.id);
 
       if (error) {
-        console.error("Lỗi xóa người dùng", error.message);
+        console.error("Lỗi thay đổi thông tin người dùng", error.message);
         setLoading(false);
         return null;
       }
@@ -261,6 +261,7 @@ const AdminPage = () => {
                 <th>ID</th>
                 <th>Họ và tên</th>
                 <th>Email</th>
+                <th>Role</th>
                 <th>Trạng thái</th>
                 <th>Ngày đăng ký</th>
                 <th>Hành động</th>
@@ -272,6 +273,7 @@ const AdminPage = () => {
                   <td className="p-2 truncate">{user?.id}</td>
                   <td>{user?.user_name}</td>
                   <td>{user?.email}</td>
+                  <td>{user?.role}</td>
                   <td
                     className={`font-bold ${getStatusColor(user?.is_active)}`}
                   >
@@ -320,14 +322,17 @@ const AdminPage = () => {
                 />
               </label>
               <label className="block mb-2">
-                Email:
-                <input
-                  type="email"
-                  name="email"
-                  value={editUser.email}
+                Vai trò:
+                <select
+                  name="role"
+                  value={editUser.role}
                   onChange={handleChange}
                   className="w-full p-2 border rounded mt-1"
-                />
+                >
+                  <option value="user">User</option>
+                  <option value="admin">Admin</option>
+                  <option value="pharmacy">Pharmacy</option>
+                </select>
               </label>
               <div className="flex justify-end space-x-2">
                 <button
@@ -355,7 +360,7 @@ const AdminPage = () => {
                 <input
                   type="text"
                   name="name"
-                  value={newUser.name}
+                  value={newUser.name || " "}
                   onChange={(e) =>
                     setNewUser({ ...newUser, name: e.target.value })
                   }

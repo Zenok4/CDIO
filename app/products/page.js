@@ -2,14 +2,31 @@
 
 import CardComponents from "@/app/_component/card";
 import { Products } from "@/app/api/data";
+import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function ProductsPage() {
-  const data = Products;
-  const [products, setProducts] = useState(data);
+  const supabase = useSupabaseClient()
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const router = useRouter()
+
+  const fetchProducts = async () => {
+    let { data, error } = await supabase.from('products').select('*');
+    if (error) {
+      console.error("Lỗi", error.message);
+      return null;
+    }
+    setProducts(data)
+  }
+
+  useEffect(() => {
+    setLoading(true);
+    fetchProducts();
+    setLoading(false);
+  }, []);
 
   return (
     <div className="flex flex-col items-center py-10">
@@ -39,7 +56,7 @@ export default function ProductsPage() {
           </div>
         </CardComponents>
       ) : (
-        <p>Không tìm thấy sản phẩm nào"</p>
+        (loading ? <p>Đang tải...</p> : <p>Không tìm thấy sản phẩm nào"</p>)
       )}
     </div>
   );

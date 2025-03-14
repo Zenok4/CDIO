@@ -1,15 +1,29 @@
 "use client";
-import { useSupabaseClient } from "@supabase/auth-helpers-react";
+import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
 import { Loader2, MoveLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const ProfilePage = () => {
   const [loading, setLoading] = useState(false);
+  const [role, setRole] = useState("");
 
   const supabase = useSupabaseClient()
+  const session = useSession();
 
   const router = useRouter();
+
+  const fetchUser = async () => {
+    setLoading(true);
+    const { data, error } = await supabase.from("users").select("role").eq("id", session?.user?.id);
+    if (error) {
+      console.error("Lỗi lấy thông tin tài khoản:", error.message);
+      setLoading(false);
+      return null;
+    }
+    setLoading(false);
+    setRole(data?.[0]?.role);
+  }
 
   const OptionItem = ({ icon, label, value, onClick }) => {
     return (
@@ -26,6 +40,16 @@ const ProfilePage = () => {
     );
   };
 
+  useEffect(() => {
+    setLoading(true);
+    setTimeout(() => {
+      if(!session)
+        router.push("/");
+    }, 1000);
+    fetchUser();
+    setLoading(false);
+  }, [session])
+
   const signOut = async () => {
     setLoading(true);
     const {data, error} = await supabase.auth.signOut();
@@ -36,6 +60,8 @@ const ProfilePage = () => {
     }
     setLoading(false);
   }
+
+  console.log({role})
 
   return (
     <div className="flex flex-col items-center bg-gray-100 min-h-screen p-6">
@@ -62,6 +88,7 @@ const ProfilePage = () => {
         <div className="space-y-3">
           <OptionItem icon="💰" label="Điểm tích lũy" value="0 điểm" />
           <OptionItem icon="⚕️" label="Hồ sơ y tế" />
+          {(role === "admin" || role === "pharmacy") && (<OptionItem icon="💊" label="Quản lý hiệu thuốc" onClick={() => router.push("/pharmacy/manager")}/>)}
           <OptionItem icon="🏷️" label="Mã giảm giá" />
           <OptionItem icon="🛒" label="Lịch sử mua hàng" />
         </div>

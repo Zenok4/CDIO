@@ -68,6 +68,7 @@ export default function LoginPage() {
           <div className="relative w-80">
             <input
               className="w-full p-2 rounded-md border border-gray-300 pr-10"
+              type="password"
               placeholder="Mật khẩu"
               onChange={(ev) => setPassword(ev.target.value)}
             />

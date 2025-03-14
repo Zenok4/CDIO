@@ -1,20 +1,74 @@
 "use client";
 import { useEffect, useState } from "react";
 import CardComponents from "./_component/card";
-import { Doctors, Pharmacys, Products } from "./api/data";
 import { ArrowRight, ThumbsUp } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
 
 export default function Home() {
-  const pro = Products;
-  const doc = Doctors;
-  const pha = Pharmacys;
+  const supabase = useSupabaseClient();
+  const sesssion = useSession();
 
-  const [products, setProducts] = useState(pro);
-  const [doctors, setDoctors] = useState(doc);
-  const [pharmacys, setPharmacys] = useState(pha);
+  const [products, setProducts] = useState([]);
+  const [doctors, setDoctors] = useState([]);
+  const [pharmacys, setPharmacys] = useState([]);
 
   const router = useRouter();
+
+  //xác nhận tài khoản có bị khóa không
+  const confirmIsActive = async () => {
+    const { data, error } = await supabase
+      .from("users")
+      .select("id, is_active")
+      .eq("id", sesssion?.user?.id);
+    if (error) {
+      console.error("Lỗi", error.message);
+      return null;
+    }
+    if (data?.[0]?.is_active === false) supabase.auth.signOut();
+  };
+
+  //render dữ liệu khi session thay đổi
+  useEffect(() => {
+    if (!sesssion) return;
+    confirmIsActive();
+  }, [sesssion]);
+
+  const fetchPharmacys = async () => {
+    const { data, error } = await supabase
+      .from("pharmacys")
+      .select("*")
+      .limit(5);
+    if (error) {
+      console.error("Lỗi", error.message);
+      return null;
+    }
+    setPharmacys(data);
+  };
+
+  const fetchProducts = async () => {
+    let { data, error } = await supabase.from("products").select("*").limit(5);
+    if (error) {
+      console.error("Lỗi", error.message);
+      return null;
+    }
+    setProducts(data);
+  };
+
+  const fetchDoctors = async () => {
+    const { data, error } = await supabase.from("doctors").select("*").limit(4);
+    if (error) {
+      console.error("Lỗi", error.message);
+      return null;
+    }
+    setDoctors(data);
+  };
+
+  useEffect(() => {
+    fetchPharmacys();
+    fetchProducts();
+    fetchDoctors();
+  }, []);
 
   return (
     <div className="flex flex-col items-center py-10 relative">
@@ -30,6 +84,9 @@ export default function Home() {
                   alt={`Hiệu thuốc ${index + 1}`}
                   className="w-[1170px] h-[500px] rounded-lg hover:opacity-80 transition"
                   loading="lazy"
+                  onClick={() =>
+                    router.push(`/pharmacys/pharmacyDetail/${pharmacy?.id}`)
+                  }
                 />
               ))}
             </div>
@@ -82,6 +139,9 @@ export default function Home() {
                   <div
                     key={doctor.id}
                     className="flex flex-col bg-white p-4 rounded-lg shadow-md w-[260px] hover:shadow-lg transition"
+                    onClick={() =>
+                      router.push(`/doctors/doctorDetail/${doctor?.id}`)
+                    }
                   >
                     <img
                       className="w-full h-[250px] rounded-lg hover:opacity-80 transition"

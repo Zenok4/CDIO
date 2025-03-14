@@ -15,12 +15,6 @@ const ChatPage = () => {
     },
   ]);
 
-  useEffect(() => {
-    if (message.trim()) {
-      handleSendMessage(true);
-    }
-  }, [message]);
-
   const handleSendMessage = (isMe) => {
     if (message.trim()) {
       setChats((prevChats) => [...prevChats, { me: isMe, content: message }]);
@@ -145,6 +139,7 @@ const ChatPage = () => {
           className="bg-white px-4 py-2 shadow text-gray-700 rounded-[20px]"
           onClick={() => {
             setMessage("Gặp bác sĩ tư vấn");
+            handleSendMessage(true);
           }}
         >
           Gặp bác sĩ tư vấn
@@ -153,6 +148,7 @@ const ChatPage = () => {
           className="bg-white px-4 py-2 shadow text-gray-700 rounded-[20px]"
           onClick={() => {
             setMessage("Gặp dược sĩ nhà thuốc");
+            handleSendMessage(true);
           }}
         >
           Gặp dược sĩ nhà thuốc
@@ -161,6 +157,7 @@ const ChatPage = () => {
           className="bg-white px-4 py-2 shadow text-gray-700 rounded-[20px]"
           onClick={() => {
             setMessage("tư vấn cụ thể");
+            handleSendMessage(true);
           }}
         >
           tư vấn cụ thể
@@ -169,6 +166,7 @@ const ChatPage = () => {
           className="bg-white px-4 py-2 shadow text-gray-700 rounded-[20px]"
           onClick={() => {
             setMessage("công dụng thuốc có tốt không");
+            handleSendMessage(true);
           }}
         >
           công dụng thuốc có tốt không
@@ -177,6 +175,7 @@ const ChatPage = () => {
           className="bg-white px-4 py-2 shadow text-gray-700 rounded-[20px]"
           onClick={() => {
             setMessage("có tích điểm không");
+            handleSendMessage(true);
           }}
         >
           có tích điểm không
