@@ -16,6 +16,11 @@ const PharmacyMangamentPage = () => {
     description: "",
     weight: "",
   });
+  const [namePha, setNamePha] = useState("");
+  const [img, setImg] = useState("");
+  const [local, setLocal] = useState("");
+  const [onCreate, setOnCreate] = useState(false);
+
   const supabase = useSupabaseClient();
 
   const session = useSession();
@@ -103,7 +108,27 @@ const PharmacyMangamentPage = () => {
     setLoading(false);
   };
 
-  return (
+  const createPharmacy = async () => {
+    setLoading(true);
+    if (namePha === "" || img === "" || local === "") {
+      setLoading(false);
+      alert("Vui lòng nhập đủ thông tin");
+      return;
+    }
+    const { data, error } = await supabase.from("pharmacys").insert({
+      name: namePha,
+      owner: session?.user?.id,
+      img: img,
+      local: local,
+    });
+    if (error) {
+      console.error("Error creating pharmacy:", error.message);
+      return;
+    }
+    setLoading(false);
+  };
+
+  return pharmacy ? (
     <div className="p-6 mx-auto pt-10">
       <h1 className="text-2xl font-bold mb-4">
         Quản lý hiệu thuốc: {pharmacy?.name}
@@ -232,6 +257,63 @@ const PharmacyMangamentPage = () => {
           ))}
         </tbody>
       </table>
+
+      {loading && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+          <div className="flex flex-col items-center p-6 bg-white rounded-lg shadow-lg">
+            <Loader2 className="w-10 h-10 animate-spin text-green-500" />
+          </div>
+        </div>
+      )}
+    </div>
+  ) : (
+    <div className="p-6 mx-auto pt-10 gap-4 items-center">
+      <p>Chưa có hiệu thuốc nào thuộc tài khoản này.</p>
+      <button
+        className="bg-blue-600 hover:bg-blue-800 text-white px-4 py-2"
+        onClick={() => setOnCreate(!onCreate)}
+      >
+        Tạo hiệu thuốc
+      </button>
+
+      {onCreate && (
+        <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-6 shadow-lg rounded">
+          <h3 className="text-lg font-semibold mb-4">Thêm hiệu thuốc</h3>
+          <form className="flex flex-col gap-4" onSubmit={createPharmacy}>
+            <input
+              placeholder="Tên hiệu thuốc"
+              className="border p-2 rounded"
+              required
+              value={namePha}
+              onChange={(e) => setNamePha(e.target.value)}
+            />
+            <input
+              placeholder="URL hình ảnh"
+              className="border p-2 rounded"
+              value={img}
+              onChange={(e) => setImg(e.target.value)}
+            />
+            <input
+              placeholder="Địa chỉ"
+              className="border p-2 rounded"
+              value={local}
+              onChange={(e) => setLocal(e.target.value)}
+            />
+            <button
+              type="submit"
+              className="bg-green-600 hover:bg-green-800 text-white px-4 py-2 rounded"
+            >
+              Lưu
+            </button>
+          </form>
+          <button
+            className="mt-4 bg-red-600 hover:bg-red-800 text-white px-4 py-2 rounded"
+            onClick={() => setOnCreate(!onCreate)}
+          >
+            Đóng
+          </button>
+        </div>
+      )}
 
       {loading && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">

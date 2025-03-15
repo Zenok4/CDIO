@@ -151,7 +151,7 @@ export default function Home() {
                     <p className="pt-2 font-semibold hover:text-blue-500 transition">
                       {doctor.name}
                     </p>
-                    <p className="text-red-600 font-bold">{doctor.price}</p>
+                    <p className="text-red-600 font-bold">{doctor?.price?.toLocaleString()}vnđ</p>
                     <p className="text-blue-600 flex gap-2">
                       <ThumbsUp className="w-5 h-5" /> {doctor.rate}% hài lòng
                     </p>

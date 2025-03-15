@@ -8,14 +8,17 @@ const ProfilePage = () => {
   const [loading, setLoading] = useState(false);
   const [role, setRole] = useState("");
 
-  const supabase = useSupabaseClient()
+  const supabase = useSupabaseClient();
   const session = useSession();
 
   const router = useRouter();
 
   const fetchUser = async () => {
     setLoading(true);
-    const { data, error } = await supabase.from("users").select("role").eq("id", session?.user?.id);
+    const { data, error } = await supabase
+      .from("users")
+      .select("role")
+      .eq("id", session?.user?.id);
     if (error) {
       console.error("Lỗi lấy thông tin tài khoản:", error.message);
       setLoading(false);
@@ -23,7 +26,7 @@ const ProfilePage = () => {
     }
     setLoading(false);
     setRole(data?.[0]?.role);
-  }
+  };
 
   const OptionItem = ({ icon, label, value, onClick }) => {
     return (
@@ -43,25 +46,24 @@ const ProfilePage = () => {
   useEffect(() => {
     setLoading(true);
     setTimeout(() => {
-      if(!session)
-        router.push("/");
+      if (!session) router.push("/");
     }, 1000);
     fetchUser();
     setLoading(false);
-  }, [session])
+  }, [session]);
 
   const signOut = async () => {
     setLoading(true);
-    const {data, error} = await supabase.auth.signOut();
-    if(error){
+    const { data, error } = await supabase.auth.signOut();
+    if (error) {
       console.error("Lỗi đăng xuất:", error.message);
       setLoading(false);
       return null;
     }
     setLoading(false);
-  }
+  };
 
-  console.log({role})
+  console.log({ role });
 
   return (
     <div className="flex flex-col items-center bg-gray-100 min-h-screen p-6">
@@ -88,7 +90,13 @@ const ProfilePage = () => {
         <div className="space-y-3">
           <OptionItem icon="💰" label="Điểm tích lũy" value="0 điểm" />
           <OptionItem icon="⚕️" label="Hồ sơ y tế" />
-          {(role === "admin" || role === "pharmacy") && (<OptionItem icon="💊" label="Quản lý hiệu thuốc" onClick={() => router.push("/pharmacy/manager")}/>)}
+          {(role === "admin" || role === "pharmacy") && (
+            <OptionItem
+              icon="💊"
+              label="Quản lý hiệu thuốc"
+              onClick={() => router.push("/pharmacy/manager")}
+            />
+          )}
           <OptionItem icon="🏷️" label="Mã giảm giá" />
           <OptionItem icon="🛒" label="Lịch sử mua hàng" />
         </div>
@@ -98,11 +106,13 @@ const ProfilePage = () => {
       <div className="mt-4 w-full max-w-sm bg-white p-4 rounded-lg shadow">
         <div className="space-y-3">
           <OptionItem icon="⚙️" label="Cài đặt" />
-          <OptionItem
-            icon="🔒"
-            label="Admin Mode"
-            onClick={() => router.push("/admin/products")}
-          />
+          {role === "admin" && (
+            <OptionItem
+              icon="🔒"
+              label="Admin Mode"
+              onClick={() => router.push("/admin/products")}
+            />
+          )}
           <OptionItem icon="🌍" label="Ngôn ngữ" value="Tiếng Việt" />
         </div>
       </div>
